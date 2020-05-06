@@ -66,6 +66,10 @@ final class Auth extends UserManager {
 			// do not send session IDs in URLs
 			\ini_set('session.use_trans_sid', 0);
 
+			if (isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS'])) {
+                            \ini_set('session.cookie_secure', 1);
+                        }
+
 			// start the session (requests a cookie to be written on the client)
 			@Session::start();
 		}
