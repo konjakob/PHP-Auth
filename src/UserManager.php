@@ -138,6 +138,18 @@ abstract class UserManager {
 			$username = null;
 		}
 
+                // count the number of users who do already have that specified email
+                $occurrencesOfEmail = $this->db->selectValue(
+                        'SELECT COUNT(*) FROM ' . $this->makeTableName('users') . ' WHERE email = ?',
+                        [ $email ]
+                );
+
+                // if any user with that username does already exist
+                if ($occurrencesOfEmail > 0) {
+                        // cancel the operation and report the violation of this requirement
+                        throw new DuplicateEmailException();
+                }
+
 		// if the uniqueness of the username is to be ensured
 		if ($requireUniqueUsername) {
 			// if a username has actually been provided
