@@ -10,6 +10,7 @@ namespace Delight\Auth;
 
 use Delight\Base64\Base64;
 use Delight\Cookie\Session;
+use Delight\Cookie\Cookie;
 use Delight\Db\PdoDatabase;
 use Delight\Db\PdoDsn;
 use Delight\Db\Throwable\Error;
@@ -243,7 +244,7 @@ abstract class UserManager {
 	 */
 	protected function onLoginSuccessful($userId, $email, $username, $status, $roles, $forceLogout, $remembered) {
 		// re-generate the session ID to prevent session fixation attacks (requests a cookie to be written on the client)
-		Session::regenerate(true);
+		Session::regenerate(true, Cookie::SAME_SITE_RESTRICTION_NONE);
 
 		// save the user data in the session variables maintained by this library
 		$_SESSION[self::SESSION_FIELD_LOGGED_IN] = true;
