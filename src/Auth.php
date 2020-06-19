@@ -443,7 +443,7 @@ final class Auth extends UserManager {
 		$_SESSION[self::SESSION_FIELD_FORCE_LOGOUT]++;
 
 		// re-generate the session ID to prevent session fixation attacks (requests a cookie to be written on the client)
-		Session::regenerate(true);
+		Session::regenerate(true, Cookie::SAME_SITE_RESTRICTION_NONE);
 
 		// if there had been an existing remember directive previously
 		if (isset($previousRememberDirectiveExpiry)) {
