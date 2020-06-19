@@ -71,7 +71,7 @@ final class Auth extends UserManager {
                         }
 
 			// start the session (requests a cookie to be written on the client)
-			@Session::start();
+			@Session::start(Cookie::SAME_SITE_RESTRICTION_NONE);
 		}
 	}
 
